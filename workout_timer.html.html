@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>15分鐘有氧運動</title>
+
+<style>
+
+body{
+font-family:Arial;
+text-align:center;
+background:#111;
+color:white;
+}
+
+#exercise{
+font-size:60px;
+margin-top:80px;
+}
+
+#timer{
+font-size:140px;
+margin-top:20px;
+}
+
+button{
+font-size:30px;
+padding:15px 40px;
+margin-top:40px;
+}
+
+</style>
+</head>
+
+<body>
+
+<div id="exercise">準備</div>
+<div id="timer">0</div>
+
+<button onclick="startWorkout()">開始</button>
+
+<script>
+
+let workout=[
+
+{name:"原地慢跑",time:60},
+{name:"原地走",time:60},
+{name:"高抬腿",time:60},
+
+{name:"開合跳",time:40},
+{name:"休息",time:20},
+
+{name:"原地跑",time:40},
+{name:"休息",time:20},
+
+{name:"高抬腿",time:40},
+{name:"休息",time:20},
+
+{name:"深蹲",time:40},
+{name:"休息",time:20},
+
+{name:"登山者",time:40},
+{name:"休息",time:20},
+
+{name:"開合跳",time:40},
+{name:"休息",time:20},
+
+{name:"原地跑",time:40},
+{name:"休息",time:20},
+
+{name:"高抬腿",time:40},
+{name:"休息",time:20},
+
+{name:"深蹲",time:40},
+{name:"休息",time:20},
+
+{name:"登山者",time:40},
+
+{name:"原地慢走",time:60},
+{name:"拉腿拉手",time:60}
+
+];
+
+let index=0;
+let time=0;
+let interval;
+
+function startWorkout(){
+
+index=0;
+nextExercise();
+
+}
+
+function nextExercise(){
+
+if(index>=workout.length){
+
+document.getElementById("exercise").innerHTML="完成！";
+document.getElementById("timer").innerHTML="✔";
+
+speech("運動完成");
+
+return;
+}
+
+time=workout[index].time;
+
+document.getElementById("exercise").innerHTML=workout[index].name;
+document.getElementById("timer").innerHTML=time;
+
+speech(workout[index].name);
+
+interval=setInterval(function(){
+
+time--;
+
+document.getElementById("timer").innerHTML=time;
+
+if(time<=5){
+beep();
+}
+
+if(time<=0){
+clearInterval(interval);
+index++;
+nextExercise();
+}
+
+},1000)
+
+}
+
+function beep(){
+
+let audio=new Audio("https://actions.google.com/sounds/v1/alarms/beep_short.ogg");
+audio.play();
+
+}
+
+function speech(text){
+
+let msg=new SpeechSynthesisUtterance(text);
+msg.lang="zh-HK";
+speechSynthesis.speak(msg);
+
+}
+
+</script>
+
+</body>
+</html>
